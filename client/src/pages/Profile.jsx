@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { getAvatarUrl } from '../utils/avatar';
 
 export default function Profile() {
   const { user, token, updateUser } = useAuth();
@@ -38,7 +39,8 @@ const [lightboxImage, setLightboxImage] = useState('');
             profilePicture: data.user.profilePicture || '',
             createdAt: data.user.createdAt // ← Add this
           });
-          setPreviewImage(data.user.profilePicture || '');
+          const fullAvatarUrl = getAvatarUrl(data.user.profilePicture, data.user.name);
+setPreviewImage(fullAvatarUrl);
         }
       } catch (err) {
         console.error(err);
@@ -97,7 +99,8 @@ setTimeout(() => setMessage(''), 3000);
     ...prev, 
     profilePicture: newProfilePicture 
   }));
-  setPreviewImage(newProfilePicture);
+  const updatedAvatarUrl = getAvatarUrl(newProfilePicture, formData.name);
+setPreviewImage(updatedAvatarUrl);
 } else {
         setMessage(data.message || 'Failed to update profile');
       }
@@ -159,7 +162,7 @@ const handleRemoveProfilePicture = async () => {
     
     if (res.ok) {
       // Reset to default avatar
-      setPreviewImage('');
+      setPreviewImage(getAvatarUrl('', user?.name)); // Shows initials avatar
       setFormData(prev => ({ ...prev, profilePicture: '' }));
       setMessage('Profile picture removed successfully!');
       setTimeout(() => setMessage(''), 3000); // ← Auto-dismiss after 3 seconds
