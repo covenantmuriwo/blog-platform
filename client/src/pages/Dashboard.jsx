@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom'; // ← Add Link here
 import { useAuth } from '../context/AuthContext';
 import NotificationBell from '../components/NotificationBell';
 
+
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const [posts, setPosts] = useState([]);
@@ -191,6 +192,17 @@ useEffect(() => {
     </button>
   </div>
 </div>
+{/* 👇 ADD THE ADMIN LINK HERE 👇 */}
+{user?.isAdmin && (
+  <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+    <Link 
+      to="/admin" 
+      className="text-red-600 font-medium hover:underline flex items-center gap-2"
+    >
+      👮‍♂️ Admin Dashboard
+    </Link>
+  </div>
+)}
 
           {loading ? (
             <p className="text-gray-600">Loading your posts...</p>

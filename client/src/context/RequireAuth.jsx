@@ -9,8 +9,14 @@ export default function RequireAuth({ children }) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
   
+  // Redirect to login if not authenticated
   if (!user) {
     return <Navigate to="/login" />;
+  }
+
+  // Redirect to dashboard if authenticated but NOT admin
+  if (!user.isAdmin) {
+    return <Navigate to="/dashboard" />;
   }
   
   return children;
