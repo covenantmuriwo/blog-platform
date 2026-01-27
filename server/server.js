@@ -42,7 +42,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
 
 // ✅ ADD CORS HERE - BEFORE ROUTES
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://blog-platform-umber-two.vercel.app', // ← Add this
+    'https://blog-platform-m7icbwww3-covenant-muriwos-projects.vercel.app' // ← And this
+  ],
   credentials: true
 }));
 
