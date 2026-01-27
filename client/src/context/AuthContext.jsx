@@ -51,12 +51,35 @@ export const AuthProvider = ({ children }) => {
     verifyAuth();
   }, []);
 
-  const login = (userData, userToken) => {
-    localStorage.setItem('token', userToken);
-    localStorage.setItem('user', JSON.stringify(userData));
-    setToken(userToken);
+  const login = async (userData, userToken) => {
+  // Save token immediately
+  localStorage.setItem('token', userToken);
+  setToken(userToken);
+
+  try {
+    // Fetch FULL user profile (this includes `isAdmin`)
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`, {
+      headers: { Authorization: `Bearer ${userToken}` }
+    });
+
+    if (res.ok) {
+      const fullUserData = await res.json();
+      const completeUser = fullUserData.user; // ← contains `isAdmin`
+
+      setUser(completeUser);
+      localStorage.setItem('user', JSON.stringify(completeUser));
+    } else {
+      // Fallback: use minimal user if profile fetch fails
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+    }
+  } catch (err) {
+    console.error('Profile fetch failed after login:', err);
+    // Still use minimal user as fallback
     setUser(userData);
-  };
+    localStorage.setItem('user', JSON.stringify(userData));
+  }
+};
 
   const logout = () => {
     localStorage.removeItem('token');

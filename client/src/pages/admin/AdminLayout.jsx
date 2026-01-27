@@ -13,26 +13,34 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="flex">
-        <aside className="w-64 bg-white shadow-md min-h-screen">
-          <div className="p-6 border-b">
-            <h1 className="text-xl font-bold text-indigo-600">Admin Panel</h1>
-          </div>
-          <nav className="p-4">
-            <Link to="/admin" className="block py-2 px-4 hover:bg-gray-100 rounded">Dashboard</Link>
-            <Link to="/admin/users" className="block py-2 px-4 hover:bg-gray-100 rounded">Users</Link>
-            <Link to="/admin/posts" className="block py-2 px-4 hover:bg-gray-100 rounded">Posts</Link>
-            <Link to="/admin/comments" className="block py-2 px-4 hover:bg-gray-100 rounded">Comments</Link>
-          </nav>
-        </aside>
-        
-        {/* Main Content */}
-        <main className="flex-1 p-8">
-          <Outlet />
-        </main>
-      </div>
+  <div className="min-h-screen bg-gray-100">
+    {/* Sidebar */}
+    <div className="flex">
+      <aside className="w-64 bg-white shadow-md min-h-screen">
+        <div className="p-6 border-b flex justify-between items-center">
+          <h1 className="text-xl font-bold text-indigo-600">Admin Panel</h1>
+          {/* 👇 Add "Back to Dashboard" link HERE */}
+          <Link 
+            to="/dashboard" 
+            className="text-sm text-gray-600 hover:text-indigo-600 underline"
+            title="Back to your personal dashboard"
+          >
+            ← Dashboard
+          </Link>
+        </div>
+        <nav className="p-4">
+          <Link to="/admin" className="block py-2 px-4 hover:bg-gray-100 rounded">Dashboard</Link>
+          <Link to="/admin/users" className="block py-2 px-4 hover:bg-gray-100 rounded">Users</Link>
+          <Link to="/admin/posts" className="block py-2 px-4 hover:bg-gray-100 rounded">Posts</Link>
+          <Link to="/admin/comments" className="block py-2 px-4 hover:bg-gray-100 rounded">Comments</Link>
+        </nav>
+      </aside>
+      
+      {/* Main Content */}
+      <main className="flex-1 p-8">
+        <Outlet />
+      </main>
     </div>
-  );
+  </div>
+);
 }
