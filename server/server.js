@@ -51,6 +51,11 @@ app.use(cors({
   credentials: true
 }));
 
+// Health check endpoint (for waking up Render)
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Backend is awake' });
+});
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/posts', require('./routes/postRoutes'));

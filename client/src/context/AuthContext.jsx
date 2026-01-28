@@ -10,46 +10,49 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Check for existing auth on app load - WITH BACKEND VERIFICATION
-  useEffect(() => {
-    const verifyAuth = async () => {
-      const storedToken = localStorage.getItem('token');
-      
-      if (storedToken) {
-        try {
-          // Verify token with backend
-          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-            headers: {
-              Authorization: `Bearer ${storedToken}`
-            }
-          });
-          
-          if (res.ok) {
-            const data = await res.json();
-            setUser(data.user);
-            setToken(storedToken);
-            localStorage.setItem('user', JSON.stringify(data.user));
-          } else {
-            // Token invalid - clear storage
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            setUser(null);
-            setToken(null);
-          }
-        } catch (err) {
-          console.error('Auth verification failed:', err);
+useEffect(() => {
+  const verifyAuth = async () => {
+    // 🔥 WAKE UP THE BACKEND FIRST (even before auth check)
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/health`);
+    } catch (err) {
+      console.log('Waking up backend...');
+    }
+
+    // Now proceed with normal auth verification
+    const storedToken = localStorage.getItem('token');
+    
+    if (storedToken) {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+          headers: { Authorization: `Bearer ${storedToken}` }
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data.user);
+          setToken(storedToken);
+          localStorage.setItem('user', JSON.stringify(data.user));
+        } else {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           setUser(null);
           setToken(null);
         }
+      } catch (err) {
+        console.error('Auth verification failed:', err);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+        setToken(null);
       }
-      
-      setLoading(false);
-    };
+    }
+    
+    setLoading(false);
+  };
 
-    verifyAuth();
-  }, []);
+  verifyAuth();
+}, []);
 
   const login = async (userData, userToken) => {
   // Save token immediately
