@@ -34,10 +34,7 @@ return (
     </button>
 
     {isOpen && (
-      <div 
-        className="fixed inset-x-4 top-[72px] z-50 bg-white rounded-lg shadow-lg border border-gray-200 max-h-[70vh] overflow-y-auto"
-        style={{ maxWidth: 'calc(100vw - 2rem)' }}
-      >
+      <div className="fixed left-4 right-4 sm:left-auto sm:right-4 sm:w-80 top-[72px] z-50 bg-white rounded-lg shadow-lg border border-gray-200 max-h-[70vh] overflow-y-auto">
         <div className="p-4 border-b border-gray-200">
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-gray-800">Notifications</h3>
@@ -105,14 +102,16 @@ return (
                         src={getAvatarUrl(sender.profilePicture, sender.name)}
                         alt={senderName}
                         className="w-8 h-8 rounded-full object-cover"
-                        onError={(e) => {
-                          if (!e.target.retryed) {
-                            e.target.retryed = true;
-                            setTimeout(() => {
-                              e.target.src = getAvatarUrl(sender.profilePicture, sender.name) + '?retry=' + Date.now();
-                            }, 2000);
-                          }
-                        }}
+                      onError={(e) => {
+  if (!e.target.retryed) {
+    e.target.retryed = true;
+    setTimeout(() => {
+      e.target.src = getAvatarUrl(user.profilePicture, user.name) + '?retry=' + Date.now();
+    }, 2000);
+  } else {
+    e.target.src = getAvatarUrl('', user.name);
+  }
+}}
                         crossorigin="anonymous"
                       />
                     </Link>

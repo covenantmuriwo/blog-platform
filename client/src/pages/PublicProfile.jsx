@@ -71,18 +71,16 @@ export default function PublicProfile() {
                 src={getAvatarUrl(user.profilePicture, user.name)}
                 alt={user.name}
                 className="w-24 h-24 rounded-full object-cover border-2 border-gray-300 hover:opacity-75 transition"
-                onError={(e) => {
-    if (!e.target.retryed) {
-      e.target.retryed = true;
-      setTimeout(() => {
-        // Rebuild URL with cache-busting param
-        e.target.src = getAvatarUrl(profilePicture, name) + '?retry=' + Date.now();
-      }, 2000);
-    } else {
-      // Final fallback: initials avatar
-      e.target.src = getAvatarUrl('', name);
-    }
-  }}
+ onError={(e) => {
+  if (!e.target.retryed) {
+    e.target.retryed = true;
+    setTimeout(() => {
+      e.target.src = getAvatarUrl(user.profilePicture, user.name) + '?retry=' + Date.now();
+    }, 2000);
+  } else {
+    e.target.src = getAvatarUrl('', user.name);
+  }
+}}
                 crossorigin="anonymous"
               />
             </div>
@@ -133,18 +131,16 @@ export default function PublicProfile() {
               src={getAvatarUrl(user.profilePicture, user.name)}
               alt={user.name}
               className="max-w-full max-h-[90vh] object-contain rounded"
-              onError={(e) => {
-    if (!e.target.retryed) {
-      e.target.retryed = true;
-      setTimeout(() => {
-        // Rebuild URL with cache-busting param
-        e.target.src = getAvatarUrl(profilePicture, name) + '?retry=' + Date.now();
-      }, 2000);
-    } else {
-      // Final fallback: initials avatar
-      e.target.src = getAvatarUrl('', name);
-    }
-  }}
+onError={(e) => {
+  if (!e.target.retryed) {
+    e.target.retryed = true;
+    setTimeout(() => {
+      e.target.src = getAvatarUrl(user.profilePicture, user.name) + '?retry=' + Date.now();
+    }, 2000);
+  } else {
+    e.target.src = getAvatarUrl('', user.name);
+  }
+}}
               crossorigin="anonymous"
               onClick={(e) => e.stopPropagation()}
             />
