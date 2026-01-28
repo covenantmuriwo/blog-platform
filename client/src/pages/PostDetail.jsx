@@ -364,6 +364,18 @@ const CommentItem = ({ comment, user, handleCommentLike, handleReplySubmit, hand
                 src={getAvatarUrl(comment.author?.profilePicture, comment.author?.name)}
                 alt={comment.author?.name}
                 className="w-6 h-6 rounded-full object-cover"
+                onError={(e) => {
+    if (!e.target.retryed) {
+      e.target.retryed = true;
+      setTimeout(() => {
+        // Rebuild URL with cache-busting param
+        e.target.src = getAvatarUrl(profilePicture, name) + '?retry=' + Date.now();
+      }, 2000);
+    } else {
+      // Final fallback: initials avatar
+      e.target.src = getAvatarUrl('', name);
+    }
+  }}
               />
             </Link>
             <Link to={`/profile/${comment.author?._id}`} className="text-sm text-indigo-600 hover:underline">
@@ -655,6 +667,18 @@ const handleCommentLike = async (commentId) => {
   src={getAvatarUrl(post.author?.profilePicture, post.author?.name)}
   alt={post.author?.name}
   className="w-6 h-6 rounded-full object-cover"
+  onError={(e) => {
+    if (!e.target.retryed) {
+      e.target.retryed = true;
+      setTimeout(() => {
+        // Rebuild URL with cache-busting param
+        e.target.src = getAvatarUrl(profilePicture, name) + '?retry=' + Date.now();
+      }, 2000);
+    } else {
+      // Final fallback: initials avatar
+      e.target.src = getAvatarUrl('', name);
+    }
+  }}
   crossorigin="anonymous"
 />
     </Link>
