@@ -37,13 +37,13 @@ export default function NotificationBell() {
           <div className="p-4 border-b border-gray-200">
             <div className="flex justify-between items-center">
               <h3 className="font-semibold text-gray-800">Notifications</h3>
+              <h3 className="font-semibold text-red-600">Notifications — FIXED!</h3>
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkAllRead}
                   className="text-sm text-indigo-600 hover:text-indigo-800"
                 >
                   Mark all as read
-                  <h3 className="font-semibold text-red-600">Notifications — FIXED!</h3>
                 </button>
               )}
             </div>

@@ -53,7 +53,6 @@ useEffect(() => {
 
   verifyAuth();
 }, []);
-
   const login = async (userData, userToken) => {
   // Save token immediately
   localStorage.setItem('token', userToken);
