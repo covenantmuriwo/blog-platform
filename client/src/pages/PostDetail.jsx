@@ -365,13 +365,17 @@ const CommentItem = ({ comment, user, handleCommentLike, handleReplySubmit, hand
                 alt={comment.author?.name}
                 className="w-6 h-6 rounded-full object-cover"
 onError={(e) => {
-  if (!e.target.retryed) {
-    e.target.retryed = true;
+  const imgSrc = e.target.src;
+  if (!avatarCache.has(imgSrc)) {
+    avatarCache.set(imgSrc, true); // mark as attempted
     setTimeout(() => {
-      e.target.src = getAvatarUrl(user.profilePicture, user.name) + '?retry=' + Date.now();
+      // Retry only if we haven't already fallen back
+      if (e.target.src === imgSrc) {
+        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPgogIDxwYXRoIGQ9Ik04IDEyYTEgMSAwIDAgMCAyIDBtNCAwYTEgMSAwIDAgMCAyIDBtLTYgNGE0IDQgMCAxIDEgOCAwIi8+Cjwvc3ZnPg==';
+      }
     }, 2000);
-  } else {
-    // ✅ SAFE, INLINE FALLBACK (never fails)
+  } else if (!imgSrc.includes('data:image')) {
+    // If already retried and still failing, use fallback immediately
     e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPgogIDxwYXRoIGQ9Ik04IDEyYTEgMSAwIDAgMCAyIDBtNCAwYTEgMSAwIDAgMCAyIDBtLTYgNGE0IDQgMCAxIDEgOCAwIi8+Cjwvc3ZnPg==';
   }
 }}
