@@ -1,34 +1,12 @@
-// client/src/utils/avatar.js
+const DEFAULT_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPgogIDxwYXRoIGQ9Ik04IDEyYTEgMSAwIDAgMCAyIDBtNCAwYTEgMSAwIDAgMCAyIDBtLTYgNGE0IDQgMCAxIDEgOCAwIi8+Cjwvc3ZnPg==';
+
 export const getAvatarUrl = (profilePicture, name = 'User') => {
-  console.log('DEBUG: profilePicture input:', profilePicture);
-  console.log('DEBUG: VITE_API_URL:', import.meta.env.VITE_API_URL);
-  
-  // If user has uploaded a profile picture
   if (profilePicture && typeof profilePicture === 'string' && profilePicture.trim() !== '') {
-    // Normalize Windows paths
     let normalizedPath = profilePicture.replace(/\\/g, '/');
-    console.log('DEBUG: normalizedPath:', normalizedPath);
-    
-    // Handle full URLs (external avatars, Cloudinary, etc.)
     if (normalizedPath.startsWith('http')) {
-      console.log('DEBUG: returning full URL');
       return normalizedPath;
     }
-    
-    // Handle local uploads - use API URL
-    const finalUrl = `${import.meta.env.VITE_API_URL}/${normalizedPath}`;
-    console.log('DEBUG: returning final URL:', finalUrl);
-    return finalUrl;
+    return `${import.meta.env.VITE_API_URL}/${normalizedPath}`;
   }
-
-  // Generate initials from name
-  const initials = name
-    .split(' ')
-    .map(part => part[0])
-    .join('')
-    .substring(0, 2)
-    .toUpperCase();
-
-  // Return dynamic UI Avatar URL - NO EXTRA SPACES
-  return `https://ui-avatars.com/api/?name=${initials}&background=f3f4f6&color=9ca3af&size=200&bold=true&rounded=true`;
+  return DEFAULT_AVATAR;
 };

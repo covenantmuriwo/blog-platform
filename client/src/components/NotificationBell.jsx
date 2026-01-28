@@ -102,14 +102,15 @@ return (
                         src={getAvatarUrl(sender.profilePicture, sender.name)}
                         alt={senderName}
                         className="w-8 h-8 rounded-full object-cover"
-                      onError={(e) => {
+onError={(e) => {
   if (!e.target.retryed) {
     e.target.retryed = true;
     setTimeout(() => {
       e.target.src = getAvatarUrl(user.profilePicture, user.name) + '?retry=' + Date.now();
     }, 2000);
   } else {
-    e.target.src = getAvatarUrl('', user.name);
+    // ✅ SAFE, INLINE FALLBACK (never fails)
+    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPgogIDxwYXRoIGQ9Ik04IDEyYTEgMSAwIDAgMCAyIDBtNCAwYTEgMSAwIDAgMCAyIDBtLTYgNGE0IDQgMCAxIDEgOCAwIi8+Cjwvc3ZnPg==';
   }
 }}
                         crossorigin="anonymous"
