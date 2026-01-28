@@ -43,6 +43,7 @@ export default function NotificationBell() {
                   className="text-sm text-indigo-600 hover:text-indigo-800"
                 >
                   Mark all as read
+                  <h3 className="font-semibold text-red-600">Notifications — FIXED!</h3>
                 </button>
               )}
             </div>
