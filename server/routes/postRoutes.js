@@ -6,26 +6,27 @@ const {
   getMyPosts,
   getAllPosts,
   getSinglePost,
-  getPostById,
   updatePost,
   deletePost
 } = require('../controllers/postController');
-const { protect } = require('../middleware/auth'); // ✅ CORRECT IMPORT
+const { protect } = require('../middleware/auth');
+const commentRoutes = require('./commentRoutes'); // ← ADD THIS IMPORT
+
 const router = express.Router();
 
 // Public routes
 router.route('/').get(getAllPosts);
-
-// 👇 MOVE THIS LINE UP (before /:id)
-router.route('/me').get(protect, getMyPosts); // ✅ USE 'protect' NOT 'auth'
-
-// Public single post (now safe)
+router.route('/me').get(protect, getMyPosts);
 router.route('/:id').get(getSinglePost);
 
 // Private routes
-router.route('/').post(protect, upload, createPost); // ✅ USE 'protect'
+router.route('/')
+  .post(protect, upload, createPost);
 router.route('/:id')
-  .put(protect, upload, updatePost) // ✅ USE 'protect'
-  .delete(protect, deletePost); // ✅ USE 'protect'
+  .put(protect, upload, updatePost)
+  .delete(protect, deletePost);
+
+// ✅ Mount comment routes under /api/posts/:postId/comments
+router.use('/:postId/comments', commentRoutes);
 
 module.exports = router;

@@ -59,7 +59,8 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/posts', require('./routes/postRoutes'));
-app.use('/api/comments', require('./routes/commentRoutes')); // ✅ Only this line for comments
+// Handle nested comment routes under posts
+app.use('/api/posts', require('./routes/postRoutes')); // must come first
 app.use('/api', require('./routes/likeRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
