@@ -105,7 +105,7 @@ return (
 onError={(e) => {
   e.target.src = 'https://ui-avatars.com/api/?name=XX&background=f3f4f6&color=9ca3af';
 }}
-                        crossorigin="anonymous"
+                        crossOrigin="anonymous"
                       />
                     </Link>
                     <div className="flex-1 min-w-0">

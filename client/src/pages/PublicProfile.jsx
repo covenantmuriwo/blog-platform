@@ -74,7 +74,7 @@ export default function PublicProfile() {
 onError={(e) => {
   e.target.src = 'https://ui-avatars.com/api/?name=XX&background=f3f4f6&color=9ca3af';
 }}
-                crossorigin="anonymous"
+                crossOrigin="anonymous"
               />
             </div>
             

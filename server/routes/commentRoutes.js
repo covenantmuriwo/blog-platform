@@ -5,11 +5,12 @@ const { protect } = require('../middleware/auth');
 const commentController = require('../controllers/commentController');
 
 // These routes are mounted under /api/posts/:postId/comments
-router.get('/', commentController.getCommentsByPost);     // GET /api/posts/:id/comments
-router.post('/', protect, commentController.addComment); // POST /api/posts/:id/comments
+// So: GET / → GET /api/posts/:postId/comments
+router.get('/', commentController.getCommentsByPost);
+router.post('/', protect, commentController.addComment);
 
-// Reply and delete use top-level comment routes
-router.post('/reply', protect, commentController.replyToComment); // POST /api/comments/reply
-router.delete('/:commentId', protect, commentController.deleteComment); // DELETE /api/comments/:id
+// Top-level comment routes (not nested under posts)
+router.post('/reply', protect, commentController.replyToComment);
+router.delete('/:commentId', protect, commentController.deleteComment);
 
 module.exports = router;
