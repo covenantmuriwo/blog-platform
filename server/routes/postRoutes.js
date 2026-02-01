@@ -10,7 +10,7 @@ const {
   deletePost
 } = require('../controllers/postController');
 const { protect } = require('../middleware/auth');
-const commentRoutes = require('./commentRoutes'); // ← ADD THIS IMPORT
+
 
 const router = express.Router();
 
@@ -26,7 +26,8 @@ router.route('/:id')
   .put(protect, upload, updatePost)
   .delete(protect, deletePost);
 
-// ✅ Mount comment routes under /api/posts/:postId/comments
+// Mount comment routes under /:postId/comments
+const commentRoutes = require('./commentRoutes');
 router.use('/:postId/comments', commentRoutes);
 
 module.exports = router;

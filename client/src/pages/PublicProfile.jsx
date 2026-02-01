@@ -72,19 +72,7 @@ export default function PublicProfile() {
                 alt={user.name}
                 className="w-24 h-24 rounded-full object-cover border-2 border-gray-300 hover:opacity-75 transition"
 onError={(e) => {
-  const imgSrc = e.target.src;
-  if (!avatarCache.has(imgSrc)) {
-    avatarCache.set(imgSrc, true); // mark as attempted
-    setTimeout(() => {
-      // Retry only if we haven't already fallen back
-      if (e.target.src === imgSrc) {
-        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPgogIDxwYXRoIGQ9Ik04IDEyYTEgMSAwIDAgMCAyIDBtNCAwYTEgMSAwIDAgMCAyIDBtLTYgNGE0IDQgMCAxIDEgOCAwIi8+Cjwvc3ZnPg==';
-      }
-    }, 2000);
-  } else if (!imgSrc.includes('data:image')) {
-    // If already retried and still failing, use fallback immediately
-    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPgogIDxwYXRoIGQ9Ik04IDEyYTEgMSAwIDAgMCAyIDBtNCAwYTEgMSAwIDAgMCAyIDBtLTYgNGE0IDQgMCAxIDEgOCAwIi8+Cjwvc3ZnPg==';
-  }
+  e.target.src = 'https://ui-avatars.com/api/?name=XX&background=f3f4f6&color=9ca3af';
 }}
                 crossorigin="anonymous"
               />

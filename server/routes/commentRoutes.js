@@ -1,20 +1,15 @@
 // server/routes/commentRoutes.js
 const express = require('express');
 const router = express.Router();
-
-// ✅ CORRECT IMPORT - destructure the protect function
 const { protect } = require('../middleware/auth');
-
-// Import controller
 const commentController = require('../controllers/commentController');
 
-// Public routes (no auth required)
-router.get('/posts/:postId/comments', commentController.getCommentsByPost);
-router.get('/:postId', commentController.getComments);
+// These routes are mounted under /api/posts/:postId/comments
+router.get('/', commentController.getCommentsByPost);     // GET /api/posts/:id/comments
+router.post('/', protect, commentController.addComment); // POST /api/posts/:id/comments
 
-// Protected routes (auth required) - ✅ USE 'protect' NOT 'auth'
-router.post('/:postId/comments', protect, commentController.addComment);
-router.post('/:commentId/reply', protect, commentController.replyToComment);
-router.delete('/:commentId', protect, commentController.deleteComment);
+// Reply and delete use top-level comment routes
+router.post('/reply', protect, commentController.replyToComment); // POST /api/comments/reply
+router.delete('/:commentId', protect, commentController.deleteComment); // DELETE /api/comments/:id
 
 module.exports = router;
