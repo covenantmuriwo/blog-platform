@@ -31,7 +31,8 @@ app.use(express.json());
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://your-vercel-project.vercel.app' // ← Replace with your Vercel URL
+    'https://client-2r4n92l8f-covenant-muriwos-projects.vercel.app', // ✅ Your real frontend
+    'https://client-teal-six-96.vercel.app' // ✅ Alias (optional)
   ],
   credentials: true
 };
