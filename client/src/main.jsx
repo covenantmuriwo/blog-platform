@@ -1,3 +1,5 @@
+
+// Rebuild with correct API URL - 2026-02-06
 // client/src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
