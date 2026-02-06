@@ -1,4 +1,6 @@
+{/* Fresh deploy - 2026-02-06 */}
 // client/src/App.jsx
+
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import PostDetail from './pages/PostDetail';
