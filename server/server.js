@@ -31,8 +31,9 @@ app.use(express.json());
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://client-2r4n92l8f-covenant-muriwos-projects.vercel.app', // ✅ Your real frontend
-    'https://client-teal-six-96.vercel.app' // ✅ Alias (optional)
+    'https://client-2r4n92l8f-covenant-muriwos-projects.vercel.app',
+    'https://client-teal-six-96.vercel.app',
+    'https://animated-jalebi-9fa9c0.netlify.app' // ← ADD THIS
   ],
   credentials: true
 };
