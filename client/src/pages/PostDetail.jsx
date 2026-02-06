@@ -69,7 +69,7 @@ useEffect(() => {
 
       // Fetch comments
       console.log('🔍 DEBUG: Fetching comments from:', `${import.meta.env.VITE_API_URL}/api/posts/${postId}/comments`);
-      const commentsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/posts/${postId}/comments`);
+      const commentsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/comments`);
       console.log('🔍 DEBUG: Comments response status:', commentsRes.status);
       
       if (!commentsRes.ok) {
@@ -99,7 +99,7 @@ useEffect(() => {
   
   const refreshComments = async () => {
     try {
-      const commentsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/posts/${postId}/comments`);
+      const commentsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}/comments`);
       if (commentsRes.ok) {
         const commentsData = await commentsRes.json();
         setComments(commentsData.comments || []);
@@ -259,7 +259,7 @@ const handleReplySubmit = async (parentCommentId, replyContent) => {
   setComments(prevComments => findAndAddReply(prevComments, parentCommentId, newReply));
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/${parentCommentId}/reply`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/reply/${parentCommentId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -507,12 +507,12 @@ const CommentItem = ({ comment, user, handleCommentLike, handleReplySubmit, hand
   // Handle comment delete
 const handleDeleteComment = async (commentId) => {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+   const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${commentId}`, {
+  method: 'DELETE',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+});
 
     if (res.ok) {
       // Remove comment and its replies from UI
@@ -547,12 +547,12 @@ const handleCommentLike = async (commentId) => {
   if (!user) return;
   
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}/like`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${commentId}/like`, {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+});
 
     const data = await res.json();
     if (res.ok) {
