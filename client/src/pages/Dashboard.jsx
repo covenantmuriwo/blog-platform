@@ -169,6 +169,21 @@ useEffect(() => {
   </div>
 </div>
 
+{/* 👇 ADD THIS BLOCK */}
+{user && user.isAdmin && (
+  <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+    <h3 className="font-medium text-blue-800 mb-2">Admin Access</h3>
+    <p className="text-blue-700 text-sm mb-3">
+      You have administrator privileges. Manage users, posts, and site settings.
+    </p>
+    <Link
+      to="/admin"
+      className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium"
+    >
+      Go to Admin Dashboard
+    </Link>
+  </div>
+)}
        <div className="bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
   <div>
