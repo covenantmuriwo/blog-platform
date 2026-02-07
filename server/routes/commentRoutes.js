@@ -1,23 +1,22 @@
 // server/routes/commentRoutes.js
 const express = require('express');
-const router = express.Router();
 const { protect } = require('../middleware/auth');
 const commentController = require('../controllers/commentController');
 const { likeComment } = require('../controllers/likeController');
 
-// Public: Get comments for a post
-router.get('/:postId/comments', commentController.getCommentsByPost);
+// 👇 Router for routes under /api/posts (fetching & creating comments)
+const postCommentRouter = express.Router();
+postCommentRouter.get('/:postId/comments', commentController.getCommentsByPost);
+postCommentRouter.post('/:postId/comments', protect, commentController.addComment);
 
-// Protected: Create comment
-router.post('/:postId/comments', protect, commentController.addComment);
+// 👇 Router for routes under /api/comments (actions on individual comments)
+const commentActionRouter = express.Router();
+commentActionRouter.post('/comments/:commentId/reply', protect, commentController.replyToComment);
+commentActionRouter.delete('/comments/:commentId', protect, commentController.deleteComment);
+commentActionRouter.post('/comments/:commentId/like', protect, likeComment);
 
-// Protected: Reply to a comment
-router.post('/comments/:commentId/reply', protect, commentController.replyToComment);
-
-// Protected: Delete a comment
-router.delete('/comments/:commentId', protect, commentController.deleteComment);
-
-// Protected: Like a comment
-router.post('/comments/:commentId/like', protect, likeComment);
-
-module.exports = router;
+// Export both
+module.exports = {
+  postCommentRouter,
+  commentActionRouter
+};
