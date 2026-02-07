@@ -1,6 +1,7 @@
 // server/routes/postRoutes.js
 
 const express = require('express');
+const { likePost } = require('../controllers/likeController');
 const {
   createPost,
   upload,
@@ -23,6 +24,7 @@ router.route('/me').get(protect, getMyPosts);
 router.route('/:id')
   .get(getSinglePost)                    // public
   .put(protect, upload, updatePost)      // private
-  .delete(protect, deletePost);          // private
+  .delete(protect, deletePost) 
+  .post('/like', protect, likePost);        // private
 
 module.exports = router;
