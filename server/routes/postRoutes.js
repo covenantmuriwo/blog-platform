@@ -25,8 +25,4 @@ router.route('/:id')
   .put(protect, upload, updatePost)      // private
   .delete(protect, deletePost);          // private
 
-// Comment routes (nested)
-const commentRoutes = require('./commentRoutes');
-router.use('/:postId/comments', commentRoutes);
-
 module.exports = router;
