@@ -259,14 +259,14 @@ const handleReplySubmit = async (parentCommentId, replyContent) => {
   setComments(prevComments => findAndAddReply(prevComments, parentCommentId, newReply));
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/reply/${parentCommentId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({ content: replyContent })
-    });
+const res = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/${parentCommentId}/reply`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  },
+  body: JSON.stringify({ content: replyContent })
+});
 
     const data = await res.json();
     if (res.ok) {
@@ -507,7 +507,7 @@ const CommentItem = ({ comment, user, handleCommentLike, handleReplySubmit, hand
   // Handle comment delete
 const handleDeleteComment = async (commentId) => {
   try {
-   const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${commentId}`, {
+ const res = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}`, {
   method: 'DELETE',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -547,7 +547,7 @@ const handleCommentLike = async (commentId) => {
   if (!user) return;
   
   try {
-const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${commentId}/like`, {
+const res = await fetch(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}/like`, {
   method: 'POST',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`

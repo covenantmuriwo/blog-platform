@@ -54,8 +54,8 @@ app.get('/api/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/posts', require('./routes/commentRoutes')); // ← ADD THIS
-app.use('/api/posts', require('./routes/postRoutes')); // ← Comments mounted inside this
+app.use('/api/posts', require('./routes/postRoutes'));     // handles /api/posts/:id
+app.use('/api', require('./routes/commentRoutes'));       // handles /api/comments/:id
 app.use('/api/likes', require('./routes/likeRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));

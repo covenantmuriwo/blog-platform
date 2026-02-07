@@ -3,15 +3,21 @@ const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/auth');
 const commentController = require('../controllers/commentController');
-const { likeComment } = require('../controllers/likeController'); // ← ADD THIS
+const { likeComment } = require('../controllers/likeController');
 
-// Public
+// Public: Get comments for a post
 router.get('/:postId/comments', commentController.getCommentsByPost);
 
-// Protected
+// Protected: Create comment
 router.post('/:postId/comments', protect, commentController.addComment);
-router.post('/reply/:commentId', protect, commentController.replyToComment);
-router.delete('/:commentId', protect, commentController.deleteComment);
-router.post('/:commentId/like', protect, likeComment); // ← ADD THIS
+
+// Protected: Reply to a comment
+router.post('/comments/:commentId/reply', protect, commentController.replyToComment);
+
+// Protected: Delete a comment
+router.delete('/comments/:commentId', protect, commentController.deleteComment);
+
+// Protected: Like a comment
+router.post('/comments/:commentId/like', protect, likeComment);
 
 module.exports = router;
