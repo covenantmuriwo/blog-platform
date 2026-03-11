@@ -18,13 +18,16 @@ const router = express.Router();
 // Public routes
 router.route('/').get(getAllPosts).post(protect, upload, createPost);
 
-// My posts (private)
+// My posts
 router.route('/me').get(protect, getMyPosts);
 
-// Single post routes — SEPARATE METHODS
-router.get('/:id', getSinglePost);                    // public
-router.put('/:id', protect, upload, updatePost);      // private
-router.delete('/:id', protect, deletePost);           // private
-router.post('/:id/like', protect, likePost);          // ✅ LIKE ROUTE
+// ✅ LIKE ROUTE FIRST
+router.post('/:id/like', protect, likePost);
+
+// Single post routes
+router.get('/:id', getSinglePost);
+router.put('/:id', protect, upload, updatePost);
+router.delete('/:id', protect, deletePost);
+
 
 module.exports = router;
