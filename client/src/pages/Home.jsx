@@ -33,7 +33,7 @@ useEffect(() => {
  useEffect(() => {
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories?src=${import.meta.env.VITE_API_URL}`);
       const data = await res.json();
       if (res.ok) {
         setCategories(data.categories || []);

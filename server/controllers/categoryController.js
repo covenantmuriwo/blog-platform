@@ -6,6 +6,8 @@ const Category = require('../models/Category');
 // @access  Public
 exports.getCategories = async (req, res) => {
   try {
+    const {src}= req.query;
+    console.log('Received src:', src); // Debug log
     const categories = await Category.find().sort({ name: 1 });
     res.json({ success: true, categories });
   } catch (err) {
