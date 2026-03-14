@@ -31,10 +31,11 @@ app.use(express.json());
 // CORS - MUST come before routes
 const corsOptions = {
   origin: [
-    'http://localhost:5173',
+    `http://localhost:${process.env.PORT || 5173}`,
     'https://client-2r4n92l8f-covenant-muriwos-projects.vercel.app',
     'https://client-teal-six-96.vercel.app',
-    'https://animated-jalebi-9fa9c0.netlify.app' // ← ADD THIS
+    'https://animated-jalebi-9fa9c0.netlify.app',
+    'http://72.62.196.72:5000'
   ],
   credentials: true
 };
